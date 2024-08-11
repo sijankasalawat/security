@@ -1,0 +1,71 @@
+.change-image{
+    height:25vh;
+   
+    border-radius:15px;
+}
+.change-image .slider {
+    width: 90%; /* Adjust the slider width as needed */
+    height: 100%; /* Adjust the slider height as needed */
+  }
+
+  
+  .change-image .slider img {
+    height: 25vh;
+    width: 29.5%;
+    border-radius:15px;
+  }
+  
+  .change-image .slide {
+    width: 100%;
+    height: fit-content;
+    background-size: cover;
+    transition: opacity 2s ease;
+    opacity: 0; /* Initially hide all slides */
+    position: absolute;
+  }
+  
+  .change-image .show-slide {
+    opacity: 1; /* Show the current slide */
+  }
+  
+  .change-image .containers {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .change-image .dots-container {
+    display: flex;
+    justify-content: center;
+    margin-top: -15px;
+    position: absolute;
+    width: 29.5%;
+  }
+  
+  .change-image .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #bbb;
+    margin: 0 6px;
+    cursor: pointer;
+  }
+  
+  .change-image .dot.active {
+    background-color: #333;
+  }
+
+  .login-page{
+    height:90vh;
+
+  }
+  .left-container{
+    width:100%;
+    height:80vh;
+  }
+  .left-container img{
+    height:100%;
+    width:100%;
+    border-radius: 20px;
+
+  }
