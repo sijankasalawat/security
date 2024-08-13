@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 const crypto = require("crypto");
 const User = require("../model/userModel");
-const sendEmail = require("../utils/sendEmail");
+const { sendEmail } = require("../middleware/sendEmail");
 const cloudinary = require('cloudinary').v2;
 
 const createUser = async (req, res) => {
@@ -134,15 +134,17 @@ const forgotPassword = async (req, res) => {
       });
     }
 
+    // Generate reset token
     const resetToken = user.getResetPasswordToken();
-    await user.save();
+    await user.save({ validateBeforeSave: false });
 
     const frontendBaseUrl = process.env.FRONTEND_BASE_URL || "http://localhost:3000";
     const resetUrl = `${frontendBaseUrl}/password/reset/${resetToken}`;
 
     const message = `Reset your password by clicking on the link below:\n\n${resetUrl}`;
 
-    try {
+    try { 
+      // Send reset email
       await sendEmail({
         email: user.email,
         subject: "Reset Password",
@@ -154,23 +156,28 @@ const forgotPassword = async (req, res) => {
         message: `Email sent to ${user.email}`,
       });
     } catch (error) {
+      // Clear reset token if email could not be sent
       user.resetPasswordToken = undefined;
       user.resetPasswordExpire = undefined;
-      await user.save();
+      await user.save({ validateBeforeSave: false });
+
+      console.error("Error sending email:", error); // Log the error for debugging
 
       res.status(500).json({
         success: false,
-        message: "Email could not be sent",
+        message: "Email could not be sent. Please try again later.",
       });
     }
   } catch (error) {
-    console.error(error);
+    console.error("Error in forgotPassword:", error); // Log the error for debugging
+
     res.status(500).json({
       success: false,
       message: "Server Error",
     });
   }
 };
+
 
 const resetPassword = async (req, res) => {
   try {

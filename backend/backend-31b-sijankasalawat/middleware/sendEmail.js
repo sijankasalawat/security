@@ -11,10 +11,10 @@ exports.sendEmail = async (options) => {
         service: process.env.SMTP_SERVICE,
     });
     const mailOptions = {
-        from: process.env.SMPT_MAIL,
+        from: process.env.SMTP_EMAIL,
         to: options.email,
         subject: options.subject,
         text: options.message,
-    }
+    };
     await transporter.sendMail(mailOptions);
-}
+};

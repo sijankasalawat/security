@@ -35,6 +35,7 @@ Api.interceptors.request.use(
 
 
 export const registerAPI = (data) => Api.post("/api/user/create", data);
+export const verifyUserApi = (data) => Api.post("/api/user/verify", data);
 export const loginApi=(data)=> Api.post("/api/user/login",data);
 export const createProductApi =(formData)=>Api.post('/api/product/createProduct',formData);
 export const updateProductApi =(formData,productId)=>Api.put('/api/product/updateProduct/'+productId,formData);
